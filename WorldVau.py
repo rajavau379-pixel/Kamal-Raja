@@ -155,13 +155,13 @@ def get_hwid():
     except:
         return str(uuid.uuid4())[:16]
 
-# Key & HWID Binding System with custom key inputs
+# Kamal Password & Auto-Approval System
 def check_key():
     os.system("clear" if os.name == "posix" else "cls")
     ____banner____()
     
     hwid = get_hwid()
-    lock_file = "/sdcard/.rajavau_key_lock.txt"
+    lock_file = "/sdcard/.kamal_password_lock.txt"
     
     saved_key = ""
     if os.path.exists(lock_file):
@@ -173,7 +173,7 @@ def check_key():
         except:
             pass
 
-    # Fetch keys from GitHub raw link
+    # Fetch approved passwords from GitHub raw link
     key_url = "https://raw.githubusercontent.com/rajavau379-pixel/Kamal-Raja/main/keys.txt"
     try:
         response = requests.get(key_url, timeout=10)
@@ -182,7 +182,7 @@ def check_key():
         valid_keys = []
 
     if saved_key and saved_key in valid_keys:
-        print(f"\033[1;32m[✓] Key Already Verified & Locked to Device!\033[0m")
+        print(f"\033[1;32m[✓] Password Already Verified & Locked to Device!\033[0m")
         time.sleep(1.5)
         return True
 
@@ -192,9 +192,9 @@ def check_key():
     time.sleep(1.5)
 
     linex()
-    print("\033[1;31mWelcome Raja Vau Teach World - Key System\033[0m")
-    print(f"\033[1;33m[+] YOUR HWID : {hwid}\033[0m")
-    print("\033[1;31m[!] Please send this HWID to admin on WhatsApp for your Key\033[0m")
+    print("\033[1;31mWelcome Raja Vau Teach World - Kamal System\033[0m")
+    print(f"\033[1;33m[+] KAMAL PASSWORD : {hwid}\033[0m")
+    print("\033[1;31m[!] Copy this password and send it to Kamal on WhatsApp\033[0m")
     linex()
     
     user_key = input("\033[1;36m[?] Enter Your Key : \033[1;32m").strip()
@@ -208,7 +208,7 @@ def check_key():
 
         os.system("clear" if os.name == "posix" else "cls")
         print("\n\033[1;32m┌──────────────────────────────────────────────────────────┐")
-        print("║ \033[1;93m[🔥] Key Approved & Device Locked Successfully [🔥]\033[1;32m      ║")
+        print("║ \033[1;93m[🔥] Password Approved & Device Locked Successfully [🔥]\033[1;32m ║")
         print("└──────────────────────────────────────────────────────────┘\033[0m\n")
         time.sleep(2)
         
@@ -222,8 +222,8 @@ def check_key():
         input("\033[1;33m[?] Have you subscribed to the channel? Press Enter to continue...\033[0m")
         return True
     else:
-        print("\n\033[1;31m[×] INVALID KEY OR ACCESS DENIED!\033[0m")
-        print(f"\033[1;33mYour Device HWID: {hwid}\033[0m")
+        print("\n\033[1;31m[×] INVALID PASSWORD OR ACCESS DENIED!\033[0m")
+        print(f"\033[1;33mYour Kamal Password: {hwid}\033[0m")
         time.sleep(3)
         sys.exit()
 
@@ -273,7 +273,7 @@ def old_One():
         data = str(random.choice(range(1000000000, 1999999999 if ask == '1' else 4999999999)))
         user.append(data)
     print('        \x1b[38;5;196m(\x1b[1;37mA\x1b[38;5;196m)\x1b[1;37m>\x1b[38;5;196m×\x1b[1;37m<\033[1;97mMETHOD 1')
-    print('       \x1b[38;5;196m(\x1b[1;37mB\x1b[38;5;196m)\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\033[1;97mMETHOD 2')
+    print('       \x1b[38;5;196m(\x1b[1;37mB\x1b[38;5;196m)\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\033[1;97mMETHOD B')
     linex()
     meth = input(f"       \x1b[38;5;196m(\x1b[1;37m★\x1b[38;5;196m)\x1b[1;37m>\x1b[38;5;196m×\x1b[1;37m<\033[1;97mCHOICE {W}(A/B): {Y}").strip().upper()
     with tred(max_workers=30) as pool:
@@ -347,7 +347,7 @@ def old_Tree():
     with tred(max_workers=30) as pool:
         ____banner____()
         print(f"       \x1b[38;5;196m(\x1b[1;37m★\x1b[38;5;196m)\x1b[1;37m>\x1b[38;5;196m×\x1b[1;37m<\033[1;97mTOTAL ID FROM CRACK {Y}: {G}{limit}{W}")
-        print(f"       \x1b[38;5;196m(\x1b[1;37m★\x1b[38;5;196m)\x1b[1;37m>\x1b[38;5;196m×\x1b[1;37m<\033[1;97mUSE AIRPLANE MOD FOR GOOD RESULT{G}")
+        print(f"       \x1b[38;5;196m(\x1b[1;37m★\x1b[38;5;196m)\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\033[1;97mUSE AIRPLANE MOD FOR GOOD RESULT{G}")
         linex()
         for uid in user:
             if meth == 'A':
