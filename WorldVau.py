@@ -155,51 +155,77 @@ def get_hwid():
     except:
         return str(uuid.uuid4())[:16]
 
-# Direct Online HWID Auto-Approval System
+# Key & HWID Binding System with custom key inputs
 def check_key():
-    while True:
-        os.system("clear" if os.name == "posix" else "cls")
-        ____banner____()
-        
-        hwid = get_hwid()
-        
-        # Fetch approved HWID list from GitHub raw link
-        key_url = "https://raw.githubusercontent.com/rajavau379-pixel/Kamal-Raja/main/keys.txt"
+    os.system("clear" if os.name == "posix" else "cls")
+    ____banner____()
+    
+    hwid = get_hwid()
+    lock_file = "/sdcard/.rajavau_key_lock.txt"
+    
+    saved_key = ""
+    if os.path.exists(lock_file):
         try:
-            response = requests.get(key_url, timeout=10)
-            approved_hwids = [k.strip() for k in response.text.splitlines() if k.strip() and not k.startswith("#")]
+            with open(lock_file, "r") as f:
+                content = f.read().split("|")
+                if len(content) == 2 and content[1].strip() == hwid:
+                    saved_key = content[0].strip()
         except:
-            approved_hwids = []
+            pass
 
-        # Check if user's device HWID is listed in GitHub keys.txt
-        if hwid in approved_hwids:
-            os.system("clear" if os.name == "posix" else "cls")
-            print("\n\033[1;32m┌──────────────────────────────────────────────────────────┐")
-            print("║ \033[1;93m[🔥] Device Approved Successfully [🔥]\033[1;32m                  ║")
-            print("└──────────────────────────────────────────────────────────┘\033[0m\n")
-            time.sleep(2)
-            
-            # Open YouTube link immediately after approval
-            yt_link = "https://youtube.com/@raja-vau-teach-world?si=E5xkVWclJVCJtJaA"
-            print("\033[1;32m[+] Opening YouTube Channel...\033[0m")
-            yt_cmd = f"am start -a android.intent.action.VIEW -d '{yt_link}' >/dev/null 2>&1 || termux-open-url '{yt_link}'"
-            os.system(yt_cmd)
-            time.sleep(2)
-            return True
-        else:
-            # Automatically open WhatsApp group link
-            whatsapp_link = "https://chat.whatsapp.com/K9E5ULcGZ7G0O15wwvodfy?s=sh&p=a&mlu=4&ilr=4"
-            os.system(f"am start -a android.intent.action.VIEW -d '{whatsapp_link}' >/dev/null 2>&1 || termux-open-url '{whatsapp_link}'")
-            
-            linex()
-            print("\033[1;31mWelcome Raja Vau Teach World - HWID Approval System\033[0m")
-            print(f"\033[1;33m[+] YOUR HWID : {hwid}\033[0m")
-            print("\033[1;31m[!] Copy this HWID and send it to admin on WhatsApp\033[0m")
-            linex()
-            
-            choice = input("\033[1;36m[?] Press Enter to check approval (or type 'exit' to quit) : \033[1;32m").strip()
-            if choice.lower() == 'exit':
-                sys.exit()
+    # Fetch keys from GitHub raw link
+    key_url = "https://raw.githubusercontent.com/rajavau379-pixel/Kamal-Raja/main/keys.txt"
+    try:
+        response = requests.get(key_url, timeout=10)
+        valid_keys = [k.strip() for k in response.text.splitlines() if k.strip() and not k.startswith("#")]
+    except:
+        valid_keys = []
+
+    if saved_key and saved_key in valid_keys:
+        print(f"\033[1;32m[✓] Key Already Verified & Locked to Device!\033[0m")
+        time.sleep(1.5)
+        return True
+
+    # Automatically open WhatsApp group link
+    whatsapp_link = "https://chat.whatsapp.com/K9E5ULcGZ7G0O15wwvodfy?s=sh&p=a&mlu=4&ilr=4"
+    os.system(f"am start -a android.intent.action.VIEW -d '{whatsapp_link}' >/dev/null 2>&1 || termux-open-url '{whatsapp_link}'")
+    time.sleep(1.5)
+
+    linex()
+    print("\033[1;31mWelcome Raja Vau Teach World - Key System\033[0m")
+    print(f"\033[1;33m[+] YOUR HWID : {hwid}\033[0m")
+    print("\033[1;31m[!] Please send this HWID to admin on WhatsApp for your Key\033[0m")
+    linex()
+    
+    user_key = input("\033[1;36m[?] Enter Your Key : \033[1;32m").strip()
+    
+    if user_key in valid_keys:
+        try:
+            with open(lock_file, "w") as f:
+                f.write(f"{user_key}|{hwid}")
+        except:
+            pass
+
+        os.system("clear" if os.name == "posix" else "cls")
+        print("\n\033[1;32m┌──────────────────────────────────────────────────────────┐")
+        print("║ \033[1;93m[🔥] Key Approved & Device Locked Successfully [🔥]\033[1;32m      ║")
+        print("└──────────────────────────────────────────────────────────┘\033[0m\n")
+        time.sleep(2)
+        
+        # Open YouTube link immediately after approval
+        yt_link = "https://youtube.com/@raja-vau-teach-world?si=E5xkVWclJVCJtJaA"
+        print("\033[1;32m[+] Opening YouTube Channel...\033[0m")
+        yt_cmd = f"am start -a android.intent.action.VIEW -d '{yt_link}' >/dev/null 2>&1 || termux-open-url '{yt_link}'"
+        os.system(yt_cmd)
+        time.sleep(2)
+        
+        input("\033[1;33m[?] Have you subscribed to the channel? Press Enter to continue...\033[0m")
+        return True
+    else:
+        print("\n\033[1;31m[×] INVALID KEY OR ACCESS DENIED!\033[0m")
+        print(f"\033[1;33mYour Device HWID: {hwid}\033[0m")
+        time.sleep(3)
+        sys.exit()
 
 def main_menu():
     ____banner____()
@@ -247,7 +273,7 @@ def old_One():
         data = str(random.choice(range(1000000000, 1999999999 if ask == '1' else 4999999999)))
         user.append(data)
     print('        \x1b[38;5;196m(\x1b[1;37mA\x1b[38;5;196m)\x1b[1;37m>\x1b[38;5;196m×\x1b[1;37m<\033[1;97mMETHOD 1')
-    print('       \x1b[38;5;196m(\x1b[1;37mB\x1b[38;5;196m)\x1b[1;37m>\x1b[38;5;196m×\x1b[1;37m<\033[1;97mMETHOD 2')
+    print('       \x1b[38;5;196m(\x1b[1;37mB\x1b[38;5;196m)\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\033[1;97mMETHOD 2')
     linex()
     meth = input(f"       \x1b[38;5;196m(\x1b[1;37m★\x1b[38;5;196m)\x1b[1;37m>\x1b[38;5;196m×\x1b[1;37m<\033[1;97mCHOICE {W}(A/B): {Y}").strip().upper()
     with tred(max_workers=30) as pool:
@@ -451,7 +477,7 @@ def login_2(uid):
 ║ \033[1;93m[🔥] SUCCESSFUL FACEBOOK ACCOUNT CREATED [🔥]\033[1;32m   ║
 ├──────────────────────────────────────────────────────────┤
 ║ \033[1;37mName     : \033[1;96mCLONED ACCOUNT
-║ \033[1;95mGmail    : \033[1;95m{uid}@facebook.com
+║ \033[1;37mGmail    : \033[1;95m{uid}@facebook.com
 ║ \033[1;37mLink     : \033[1;94mhttps://www.facebook.com/{uid}
 ║ \033[1;37mPassword : \033[1;92m{pw}
 └──────────────────────────────────────────────────────────┘\033[0m"""
